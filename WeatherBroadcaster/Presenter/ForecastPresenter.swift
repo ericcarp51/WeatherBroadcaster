@@ -19,7 +19,7 @@ class ForecastPresenter {
         self.delegate = delegate
     }
     
-    func getData() {
+    func getForecastData() {
         
         guard let url = URL(string: Constants.url) else { return }
         

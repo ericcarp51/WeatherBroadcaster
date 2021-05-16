@@ -11,21 +11,11 @@
         <!--Forecast-->
         <scene sceneID="5sg-1N-WPw">
             <objects>
-                <tableViewController id="o7c-kt-kYT" sceneMemberID="viewController">
+                <tableViewController id="o7c-kt-kYT" customClass="ForecastTableViewController" customModule="WeatherBroadcaster" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="xpS-pm-SKO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="forecastCell" id="B5P-td-rTs">
-                                <rect key="frame" x="0.0" y="28" width="375" height="43.666667938232422"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="B5P-td-rTs" id="sfw-nk-x7x">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666667938232422"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="o7c-kt-kYT" id="Uym-WE-CSQ"/>
                             <outlet property="delegate" destination="o7c-kt-kYT" id="vpN-f7-oJH"/>
@@ -77,6 +67,9 @@
                                                 <rect key="frame" x="39" y="173.66666666666663" width="20" height="22"/>
                                                 <color key="tintColor" systemColor="systemGreenColor"/>
                                                 <state key="normal" image="location.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="go:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yVP-7m-Nxl"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -124,7 +117,7 @@
                                                         </constraints>
                                                     </stackView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hU-ch-fjl">
-                                                        <rect key="frame" x="27.333333333333343" y="40" width="43.333333333333343" height="20.333333333333329"/>
+                                                        <rect key="frame" x="27.333333333333332" y="40" width="43.333333333333343" height="20.333333333333329"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -168,7 +161,7 @@
                                                 <rect key="frame" x="0.0" y="81.333333333333314" width="337.66666666666669" height="81"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="79" translatesAutoresizingMaskIntoConstraints="NO" id="jUD-47-PZQ">
-                                                        <rect key="frame" x="85.666666666666629" y="0.0" width="166.33333333333337" height="44"/>
+                                                        <rect key="frame" x="85.666666666666643" y="0.0" width="166.33333333333337" height="44"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wind" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="mSw-BS-ijr">
                                                                 <rect key="frame" x="0.0" y="2.3333333333333321" width="43.333333333333336" height="40.666666666666671"/>
@@ -187,7 +180,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100 km/h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MTD-q6-tIM">
-                                                        <rect key="frame" x="72.333333333333314" y="44.000000000000057" width="69.999999999999986" height="20.333333333333329"/>
+                                                        <rect key="frame" x="72.333333333333329" y="44.000000000000057" width="69.999999999999986" height="20.333333333333329"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -267,6 +260,16 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Now" image="sun.min.fill" catalog="system" id="IDU-qy-v0H"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="cityAndCountryLabel" destination="oFI-gC-amU" id="Gd9-pD-k6X"/>
+                        <outlet property="currentConditionsSymbolImageView" destination="1ci-Vv-ppR" id="Idj-LL-mfn"/>
+                        <outlet property="currentPressureLabel" destination="peY-r1-h6U" id="YKF-6N-WXK"/>
+                        <outlet property="currentProbabilityOfPrecipitationLabel" destination="8hU-ch-fjl" id="94g-oU-vGn"/>
+                        <outlet property="currentRainVolumeLabel" destination="ib0-6h-A3d" id="gvW-Vn-Dyp"/>
+                        <outlet property="currentWindDirectionLabel" destination="nl0-cE-01d" id="IlR-cy-XHf"/>
+                        <outlet property="currentWindSpeedLabel" destination="MTD-q6-tIM" id="QqS-9h-FlZ"/>
+                        <outlet property="temperatureAndConditionsLabel" destination="S4V-yQ-NDm" id="BLM-cv-hAZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
