@@ -52,9 +52,8 @@ struct WeatherModel: Codable {
         return String(Int(value.rounded()))
     }
     
-    var currentRainVolume: String {
-        guard let value = forecastDetails.first?.rain?.rainVolume else { return "No data" }
-        return String(format: "%.1f", value)
+    var currentRainVolume: Double? {
+        forecastDetails.first?.rain?.rainVolume
     }
     
     var currentPressure: String {
@@ -68,9 +67,9 @@ struct WeatherModel: Codable {
     }
     
     var currentWindDirection: String {
-        guard let value = forecastDetails.first?.rain?.rainVolume else { return "No data" }
+        guard let value = forecastDetails.first?.wind.directionInDegrees else { return "No data" }
         
-        switch value.rounded() {
+        switch value {
         case 0...23, 337...360:
             return "N"
         case 24...68:

@@ -39,7 +39,7 @@ class ForecastPresenter {
                 print(weatherModel)
                 self.delegate?.presentForecast(forecast: weatherModel)
             } catch {
-                print(error.localizedDescription)
+                print("ERROR! \(error.localizedDescription)")
             }
         }
         task.resume()

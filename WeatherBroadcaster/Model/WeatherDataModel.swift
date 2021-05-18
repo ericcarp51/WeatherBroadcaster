@@ -10,9 +10,20 @@ import Foundation
 struct WeatherDataModel: Codable {
     let location: LocationDetails
     let forecastDetails: [ForecastDetails]
+    
     private enum CodingKeys: String, CodingKey {
         case location = "city"
         case forecastDetails = "list"
+    }
+}
+
+struct LocationDetails: Codable {
+    let city: String
+    let country: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case city = "name"
+        case country
     }
 }
 
@@ -23,6 +34,7 @@ struct ForecastDetails: Codable {
     let probabilityOfPrecipitation: Double
     let rain: RainDetails?
     let forecastTimeStamp: String
+    
     private enum CodingKeys: String, CodingKey {
         case main
         case weather
@@ -33,18 +45,10 @@ struct ForecastDetails: Codable {
     }
 }
 
-struct LocationDetails: Codable {
-    let city: String
-    let country: String
-    private enum CodingKeys: String, CodingKey {
-        case city = "name"
-        case country
-    }
-}
-
 struct MainDetails: Codable {
     let temperature: Double
     let pressure: Int
+    
     private enum CodingKeys: String, CodingKey {
         case temperature = "temp"
         case pressure
@@ -59,6 +63,7 @@ struct WeatherDetails: Codable {
 struct WindDetails: Codable {
     let speed: Double
     let directionInDegrees: Int
+    
     private enum CodingKeys: String, CodingKey {
         case speed
         case directionInDegrees = "deg"
@@ -67,6 +72,7 @@ struct WindDetails: Codable {
 
 struct RainDetails: Codable {
     let rainVolume: Double
+    
     private enum CodingKeys: String, CodingKey {
         case rainVolume = "3h"
     }

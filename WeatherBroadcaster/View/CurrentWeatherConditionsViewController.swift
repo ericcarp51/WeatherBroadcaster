@@ -54,7 +54,7 @@ class CurrentWeatherConditionsViewController: UIViewController, ForecastPresente
             self?.cityAndCountryLabel.text = "\(forecast.city), \(forecast.country)"
             self?.temperatureAndConditionsLabel.text = "\(forecast.currentTemperature)℃ | \(forecast.currentConditions.capitalized)"
             self?.currentProbabilityOfPrecipitationLabel.text = "\(forecast.currentProbabilityOfPrecipitation)%"
-            self?.currentRainVolumeLabel.text = "\(forecast.currentRainVolume) mm"
+            self?.currentRainVolumeLabel.text = forecast.currentRainVolume != nil ? "\(forecast.currentRainVolume!) mm" : "No rain"
             self?.currentPressureLabel.text = "\(forecast.currentPressure) hPa"
             self?.currentWindSpeedLabel.text = "\(forecast.currentWindSpeed) km/h"
             self?.currentWindDirectionLabel.text = forecast.currentWindDirection
