@@ -19,7 +19,7 @@ struct WeatherModel: Codable {
         guard let value = forecastDetails.first?.weather.first?.id else { return "?" }
         switch value {
         case 200...232:
-            return "cloud.bolt"
+            return "cloud.bolt.rain"
         case 300...321:
             return "cloud.drizzle"
         case 500...521:

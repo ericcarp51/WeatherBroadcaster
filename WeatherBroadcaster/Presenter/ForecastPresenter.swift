@@ -11,38 +11,24 @@ protocol ForecastPresenterDelegate: AnyObject {
     func presentForecast(forecast: WeatherModel)
 }
 
-class ForecastPresenter {
+class ForecastPresenter: ForecastServiceDelegate {
     
     weak var delegate: ForecastPresenterDelegate?
     
-    func setViewDelegate(delegate: ForecastPresenterDelegate) {
-        self.delegate = delegate
+    let forecastService = ForecastService()
+    
+    init() {
+        forecastService.delegate = self
     }
     
-    func getForecastData() {
-        
-        guard let url = URL(string: Constants.url) else { return }
-        
-        let session = URLSession(configuration: .default)
-        
-        let task = session.dataTask(with: url) { (data, response, error) in
-            guard let data = data, error == nil else {
-                return
-            }
-            do {
-                let jsonDecoder = JSONDecoder()
-                let decodedData = try jsonDecoder.decode(WeatherDataModel.self, from: data)
-                let city = decodedData.location.city
-                let country = decodedData.location.country
-                let forecastDetails = decodedData.forecastDetails
-                let weatherModel = WeatherModel(city: city, country: country, forecastDetails: forecastDetails)
-                print(weatherModel)
-                self.delegate?.presentForecast(forecast: weatherModel)
-            } catch {
-                print("ERROR! \(error.localizedDescription)")
-            }
-        }
-        task.resume()
+    // MARK: ForecastServiceDelegate required methods
+    
+    func getForecastData(data: WeatherModel) {
+        delegate?.presentForecast(forecast: data)
+    }
+    
+    func didFail(with error: Error) {
+        print(error.localizedDescription)
     }
     
 }

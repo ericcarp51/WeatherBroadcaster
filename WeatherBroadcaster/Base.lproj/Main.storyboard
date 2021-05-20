@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Forecast-->
+        <!--Forecast Table View Controller-->
         <scene sceneID="5sg-1N-WPw">
             <objects>
                 <tableViewController id="o7c-kt-kYT" customClass="ForecastTableViewController" customModule="WeatherBroadcaster" customModuleProvider="target" sceneMemberID="viewController">
@@ -21,14 +21,13 @@
                             <outlet property="delegate" destination="o7c-kt-kYT" id="vpN-f7-oJH"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Forecast" image="calendar" catalog="system" id="Z8M-Mq-PMu"/>
                     <navigationItem key="navigationItem" id="YeR-id-Dnd"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CGR-JX-Ylo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1090" y="556"/>
+            <point key="canvasLocation" x="2031.2" y="555.66502463054189"/>
         </scene>
-        <!--Now-->
+        <!--Current Weather Conditions View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="CurrentWeatherConditionsViewController" customModule="WeatherBroadcaster" customModuleProvider="target" sceneMemberID="viewController">
@@ -258,7 +257,7 @@
                             <constraint firstItem="YB4-aF-1Uz" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.2" id="wGc-ab-g4h"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Now" image="sun.min.fill" catalog="system" id="IDU-qy-v0H"/>
+                    <navigationItem key="navigationItem" id="8eJ-Ou-q0P"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="cityAndCountryLabel" destination="oFI-gC-amU" id="Gd9-pD-k6X"/>
@@ -273,7 +272,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1088.8" y="-155.9113300492611"/>
+            <point key="canvasLocation" x="2031.2" y="-155.9113300492611"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="teK-3S-1pm">
@@ -286,13 +285,51 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="4id-cG-sL9"/>
-                        <segue destination="o7c-kt-kYT" kind="relationship" relationship="viewControllers" id="vtm-Tp-nlj"/>
+                        <segue destination="PZm-tl-b8b" kind="relationship" relationship="viewControllers" id="4id-cG-sL9"/>
+                        <segue destination="f2A-t0-Lw2" kind="relationship" relationship="viewControllers" id="vtm-Tp-nlj"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3w3-oO-PRK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="140.57971014492756" y="138.61607142857142"/>
+        </scene>
+        <!--Now-->
+        <scene sceneID="wf5-rQ-O1s">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="PZm-tl-b8b" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Now" image="sun.min.fill" catalog="system" id="IDU-qy-v0H"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7pa-eA-GE2">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="9q3-25-hgx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xk9-WC-LHA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1088.8" y="-155.9113300492611"/>
+        </scene>
+        <!--Forecast-->
+        <scene sceneID="OUi-Rs-4Ht">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="f2A-t0-Lw2" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Forecast" image="calendar" catalog="system" id="Z8M-Mq-PMu"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="G6l-EY-ADC">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="o7c-kt-kYT" kind="relationship" relationship="rootViewController" id="Qty-Be-3Ti"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TCJ-ZT-3QD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1088.8" y="555.66502463054189"/>
         </scene>
     </scenes>
     <resources>

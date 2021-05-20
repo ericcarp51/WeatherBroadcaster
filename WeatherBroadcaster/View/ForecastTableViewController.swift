@@ -7,60 +7,19 @@
 
 import UIKit
 
-extension Sequence where Iterator.Element: Hashable {
-    func unique() -> [Iterator.Element] {
-        var seen: Set<Iterator.Element> = []
-        return filter { seen.insert($0).inserted }
-    }
-}
-
 class ForecastTableViewController: UITableViewController, ForecastPresenterDelegate {
     
     // MARK: Properties
     
     let forecastPresenter = ForecastPresenter()
     var forecast: WeatherModel?
-    let dateManager = DateManager()
-    
-    var determinationArray: [[Int]]? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        guard let forecast = forecast else { return nil }
-        let arrOfDates = forecast.forecastDetails.map {
-            dateFormatter.date(from: $0.forecastTimeStamp)
-        }
-        let arrOfDays = arrOfDates.map { (day: Date?) -> Int in
-            guard let day = day else { return 0 }
-            return Calendar.current.component(.day, from: day)
-        }
-        let valueToReturn = Set(arrOfDays).sorted().map { (value) in
-            arrOfDays.filter {
-                $0 == value
-            }
-        }
-        return valueToReturn
-    }
-    
-    var sectionTitles: [String]? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        guard let forecast = forecast else { return nil }
-        let arrOfDates = forecast.forecastDetails.map {
-            dateFormatter.date(from: $0.forecastTimeStamp)
-        }
-        let arrOfWeekDaysInt = arrOfDates.map {
-            Calendar.current.component(.weekday, from: $0!)
-        }
-        let arrOfWeekDaysString = arrOfWeekDaysInt.map {
-            dateFormatter.weekdaySymbols[$0 - 1]
-        }
-        return arrOfWeekDaysString.unique()
-    }
+    let tableViewSourceManager = TableViewDataSourceManager()
+    let dateFormatter = DateFormatter()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         forecastPresenter.delegate = self
-        forecastPresenter.getForecastData()
+        forecastPresenter.forecastService.sendRequest()
         let nib = UINib(nibName: "ForecastTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: Constants.ForecastTableViewCellIdentifier)
     }
@@ -68,27 +27,33 @@ class ForecastTableViewController: UITableViewController, ForecastPresenterDeleg
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return determinationArray?.count ?? 0
+        guard let forecast = forecast else { return 0 }
+        return tableViewSourceManager.getArrayOfDays(forecast: forecast).count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return determinationArray?[section].count ?? 0
+        guard let forecast = forecast else { return 0 }
+        return tableViewSourceManager.getArrayOfDays(forecast: forecast)[section].forecasts.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.ForecastTableViewCellIdentifier, for: indexPath) as! ForecastTableViewCell
         if let forecast = forecast {
-            cell.conditionsSymbolImageView.image = UIImage(systemName: forecast.currentConditionsSymbol)
-            cell.forecastTimeLabel.text = "HH:mm"
-            cell.conditionsLabel.text = forecast.currentConditions
-            cell.temperatureLabel.text = forecast.currentTemperature
+            let item = tableViewSourceManager.getArrayOfDays(forecast: forecast)[indexPath.section].forecasts[indexPath.row]
+            cell.conditionsSymbolImageView.image = UIImage(systemName: item.symbol.symbolName())
+            cell.forecastTimeLabel.text = "\(item.time)"
+            cell.conditionsLabel.text = item.conditions.capitalized
+            cell.temperatureLabel.text = "\(item.temperature)º"
         }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let sectionTitles = sectionTitles else { return "No data" }
-        return section == 0 ? "Today" : sectionTitles[section]
+        guard let forecast = forecast else { return "No data" }
+        let item = tableViewSourceManager.getArrayOfDays(forecast: forecast)
+        let weekDayInt = Calendar.current.component(.weekday, from: item[section].date)
+        let weekDayString = dateFormatter.weekdaySymbols[weekDayInt - 1]
+        return weekDayString
     }
     
     // MARK: ForecastPresenterDelegate methods
@@ -97,7 +62,31 @@ class ForecastTableViewController: UITableViewController, ForecastPresenterDeleg
         self.forecast = forecast
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
+            self?.title = forecast.city.capitalized
         }
     }
 
+}
+
+extension Int {
+    func symbolName() -> String {
+        switch self {
+        case 200...232:
+            return "cloud.bolt.rain"
+        case 300...321:
+            return "cloud.drizzle"
+        case 500...521:
+            return "cloud.rain"
+        case 600...622:
+            return "cloud.snow"
+        case 700...781:
+            return "cloud.fog"
+        case 800:
+            return "sun.max"
+        case 800...804:
+            return "cloud.bolt"
+        default:
+            return "cloud"
+        }
+    }
 }

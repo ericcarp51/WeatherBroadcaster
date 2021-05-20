@@ -29,9 +29,8 @@ class CurrentWeatherConditionsViewController: UIViewController, ForecastPresente
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Presenter
+        // Set the forecast presenter's delegate as CurrentWeatherConditionsViewController
         forecastPresenter.delegate = self
-        //forecastPresenter.getForecastData()
     }
     
     // MARK: Forecast presenter delegate methods
@@ -42,7 +41,7 @@ class CurrentWeatherConditionsViewController: UIViewController, ForecastPresente
     }
     
     @IBAction func go(_ sender: UIButton) {
-        forecastPresenter.getForecastData()
+        forecastPresenter.forecastService.sendRequest()
     }
     
     // MARK: - Methods
@@ -50,6 +49,7 @@ class CurrentWeatherConditionsViewController: UIViewController, ForecastPresente
     func updateUI() {
         guard let forecast = forecast else { return }
         DispatchQueue.main.async { [weak self] in
+            self?.title = "Today"
             self?.currentConditionsSymbolImageView.image = UIImage(systemName: forecast.currentConditionsSymbol)
             self?.cityAndCountryLabel.text = "\(forecast.city), \(forecast.country)"
             self?.temperatureAndConditionsLabel.text = "\(forecast.currentTemperature)℃ | \(forecast.currentConditions.capitalized)"
