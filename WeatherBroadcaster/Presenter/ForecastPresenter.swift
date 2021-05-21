@@ -14,15 +14,19 @@ protocol ForecastPresenterDelegate: AnyObject {
 
 class ForecastPresenter: ForecastServiceDelegate {
     
+    // MARK: - Properties
+    
     weak var delegate: ForecastPresenterDelegate?
     
     let forecastService = ForecastService()
+    
+    // MARK: - Initializers
     
     init() {
         forecastService.delegate = self
     }
     
-    // MARK: ForecastServiceDelegate required methods
+    // MARK: - ForecastServiceDelegate required methods
     
     func getForecastData(data: WeatherModel) {
         delegate?.presentForecast(forecast: data)

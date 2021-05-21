@@ -9,13 +9,15 @@ import UIKit
 
 class ForecastTableViewController: UITableViewController, ForecastPresenterDelegate {
     
-    // MARK: Properties
+    // MARK: - Properties
     
     let forecastPresenter = ForecastPresenter()
     var forecast: WeatherModel?
     let tableViewSourceManager = TableViewDataSourceManager()
     let dateFormatter = DateFormatter()
-
+    
+    // MARK: - Lifecycle points
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         forecastPresenter.delegate = self
@@ -24,7 +26,7 @@ class ForecastTableViewController: UITableViewController, ForecastPresenterDeleg
         tableView.register(nib, forCellReuseIdentifier: Constants.ForecastTableViewCellIdentifier)
     }
 
-    // MARK: - Table view data source
+    // MARK: - Table view data source methods
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         guard let forecast = forecast else { return 0 }
@@ -56,7 +58,7 @@ class ForecastTableViewController: UITableViewController, ForecastPresenterDeleg
         return weekDayString
     }
     
-    // MARK: ForecastPresenterDelegate methods
+    // MARK: - ForecastPresenterDelegate methods
     
     func presentForecast(forecast: WeatherModel) {
         self.forecast = forecast
@@ -66,27 +68,4 @@ class ForecastTableViewController: UITableViewController, ForecastPresenterDeleg
         }
     }
 
-}
-
-extension Int {
-    func symbolName() -> String {
-        switch self {
-        case 200...232:
-            return "cloud.bolt.rain"
-        case 300...321:
-            return "cloud.drizzle"
-        case 500...521:
-            return "cloud.rain"
-        case 600...622:
-            return "cloud.snow"
-        case 700...781:
-            return "cloud.fog"
-        case 800:
-            return "sun.max"
-        case 800...804:
-            return "cloud.bolt"
-        default:
-            return "cloud"
-        }
-    }
 }

@@ -7,34 +7,32 @@
 
 import Foundation
 
-protocol TableViewDataSourceManagerDelegate {
-}
-
 struct TableViewDataSourceManager {
     
-    func getArrayOfDays(forecast: WeatherModel) -> [DayForecast] {
-        var result = [Forecast]()
+    // MARK: - Class methods
+    
+    // Function to determine an array which is used as data source for the table view in ForecastTableViewController
+    
+    func getArrayOfDays(forecast: WeatherModel) -> [ForecastByDate] {
+        var result = [ForecastByTime]()
         for item in forecast.forecastDetails {
-            result.append(Forecast(symbol: Int(item.weather.first?.id ?? 0) , time: item.forecastTimeStamp.transformToDate(), conditions: item.weather.first?.description ?? "No data", temperature: Int(item.main.temperature)))
+            result.append(ForecastByTime(symbol: Int(item.weather.first?.id ?? 0) , time: item.forecastTimeStamp.transformToDate(), conditions: item.weather.first?.description ?? "No data", temperature: Int(item.main.temperature)))
         }
-        
         let timeZoneDifference = TimeZone.current.secondsFromGMT()
-        
         let grouped = Dictionary(grouping: result) {
             Calendar.current.startOfDay(for: $0.time - TimeInterval(timeZoneDifference))
         }
-        
         let groupedAndSorted = grouped.sorted(by: { $0.0 < $1.0 })
-        
-        return groupedAndSorted.map { DayForecast(date: $0.key, forecasts: $0.value) }
+        return groupedAndSorted.map { ForecastByDate(date: $0.key, forecasts: $0.value) }
     }
-    
 }
+
+// MARK: - Used to transform String type of particular format into Date type
 
 extension String {
     func transformToDate() -> Date {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.dateFormat = Constants.dateFormat
         return dateFormatter.date(from: self) ?? Date()
     }
 }

@@ -14,13 +14,17 @@ protocol ForecastServiceDelegate {
     func didFail(with error: Error)
 }
 
-class ForecastService: NSObject, CLLocationManagerDelegate, NetworkCheckObserver {
+class ForecastService: NSObject, CLLocationManagerDelegate {
+    
+    // MARK: - Properties
     
     let locationManager = CLLocationManager()
     var delegate: ForecastServiceDelegate?
     var networkCheck = NetworkCheck.sharedInstance()
     var latitude: Double?
     var longitude: Double?
+    
+    // MARK: - Initializers
     
     override init() {
         super.init()
@@ -30,8 +34,11 @@ class ForecastService: NSObject, CLLocationManagerDelegate, NetworkCheckObserver
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
         }
-        networkCheck.addObserver(observer: self)
     }
+    
+    // MARK: - Class methods
+    
+    // Used to get a weather report using the user's current location or default location in case of an unexpected error
     
     func sendRequest() {
         if locationManager.authorizationStatus == .authorizedWhenInUse {
@@ -48,7 +55,6 @@ class ForecastService: NSObject, CLLocationManagerDelegate, NetworkCheckObserver
                     let country = decodedData.location.country
                     let forecastDetails = decodedData.forecastDetails
                     let weatherModel = WeatherModel(city: city, country: country, forecastDetails: forecastDetails)
-                    print(weatherModel)
                     self?.delegate?.getForecastData(data: weatherModel)
                 } catch {
                     self?.delegate?.didFail(with: error)
@@ -58,6 +64,8 @@ class ForecastService: NSObject, CLLocationManagerDelegate, NetworkCheckObserver
         }
     }
     
+    // MARK: - CLLocationManagerDelegate methods
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.first else { return }
         locationManager.stopUpdatingLocation()
@@ -66,13 +74,4 @@ class ForecastService: NSObject, CLLocationManagerDelegate, NetworkCheckObserver
         sendRequest()
     }
     
-    // MARK: NetworkCheckObserver methods
-    
-    func statusDidChange(status: NWPath.Status) {
-        if status == .satisfied {
-            //Do something
-        } else if status == .unsatisfied {
-            //Show no network alert
-        }
-    }
 }

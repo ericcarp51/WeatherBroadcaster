@@ -41,12 +41,16 @@ class CurrentWeatherConditionsViewController: UIViewController, ForecastPresente
         }
     }
     
-    // MARK: Forecast presenter delegate methods
+    // MARK: - Forecast presenter delegate methods
     
     func presentForecast(forecast: WeatherModel) {
         self.forecast = forecast
         updateUI()
     }
+    
+    // MARK: - Actions
+    
+    // Used to share the received weather information as a string
     
     @IBAction func shareButtonTapped(_ sender: UIButton) {
         guard let forecast = forecast else { return }
@@ -58,10 +62,12 @@ class CurrentWeatherConditionsViewController: UIViewController, ForecastPresente
     
     // MARK: - Methods
     
+    // Used to update the user's interface with the received information
+    
     func updateUI() {
         guard let forecast = forecast else { return }
         DispatchQueue.main.async { [weak self] in
-            self?.currentConditionsSymbolImageView.image = UIImage(systemName: forecast.currentConditionsSymbol)
+            self?.currentConditionsSymbolImageView.image = UIImage(systemName: forecast.currentConditionsSymbol.symbolName())
             self?.cityAndCountryLabel.text = "\(forecast.city), \(forecast.country)"
             self?.temperatureAndConditionsLabel.text = "\(forecast.currentTemperature)℃ | \(forecast.currentConditions.capitalized)"
             self?.currentProbabilityOfPrecipitationLabel.text = "\(forecast.currentProbabilityOfPrecipitation)%"
@@ -71,6 +77,8 @@ class CurrentWeatherConditionsViewController: UIViewController, ForecastPresente
             self?.currentWindDirectionLabel.text = forecast.currentWindDirection
         }
     }
+    
+    // Used to show an alert if the Internet connection is unavailable
     
     func presentAlert() {
         let alert = UIAlertController(title: "No Internet Connection", message: "This App Requires Internet Connection", preferredStyle: .alert)

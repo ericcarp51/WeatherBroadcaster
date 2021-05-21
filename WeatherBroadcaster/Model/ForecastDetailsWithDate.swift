@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct DayForecast {
+struct ForecastByDate {
     let date: Date
-    let forecasts: [Forecast]
+    let forecasts: [ForecastByTime]
 }
 
-struct Forecast {
+struct ForecastByTime {
     let symbol: Int
     let time: Date
     let conditions: String

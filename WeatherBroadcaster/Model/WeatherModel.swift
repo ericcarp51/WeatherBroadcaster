@@ -15,26 +15,9 @@ struct WeatherModel: Codable {
     
     // MARK: - Current weather report computed properties
     
-    var currentConditionsSymbol: String {
-        guard let value = forecastDetails.first?.weather.first?.id else { return "?" }
-        switch value {
-        case 200...232:
-            return "cloud.bolt.rain"
-        case 300...321:
-            return "cloud.drizzle"
-        case 500...521:
-            return "cloud.rain"
-        case 600...622:
-            return "cloud.snow"
-        case 700...781:
-            return "cloud.fog"
-        case 800:
-            return "sun.max"
-        case 800...804:
-            return "cloud.bolt"
-        default:
-            return "cloud"
-        }
+    var currentConditionsSymbol: Int {
+        guard let value = forecastDetails.first?.weather.first?.id else { return 0 }
+        return Int(value)
     }
     
     var currentTemperature: String {
@@ -96,4 +79,29 @@ struct WeatherModel: Codable {
         forecastDetails.first?.forecastTimeStamp ?? "No data"
     }
     
+}
+
+// MARK: - Used to interpret Int as UIImage system name
+
+extension Int {
+    func symbolName() -> String {
+        switch self {
+        case 200...232:
+            return "cloud.bolt.rain"
+        case 300...321:
+            return "cloud.drizzle"
+        case 500...521:
+            return "cloud.rain"
+        case 600...622:
+            return "cloud.snow"
+        case 700...781:
+            return "cloud.fog"
+        case 800:
+            return "sun.max"
+        case 800...804:
+            return "cloud.bolt"
+        default:
+            return "cloud"
+        }
+    }
 }
