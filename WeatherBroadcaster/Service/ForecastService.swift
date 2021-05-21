@@ -43,7 +43,6 @@ class ForecastService: NSObject, CLLocationManagerDelegate {
     func sendRequest() {
         if locationManager.authorizationStatus == .authorizedWhenInUse {
             let urlString = "\(Constants.baseURL)&lat=\(latitude ?? 41)&lon=\(longitude ?? 12)"
-            print(urlString)
             guard let url = URL(string: urlString) else { return }
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { [weak self] (data, response, error) in

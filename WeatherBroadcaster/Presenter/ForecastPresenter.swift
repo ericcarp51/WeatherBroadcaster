@@ -6,10 +6,10 @@
 //
 
 import UIKit
-import Network
 
 protocol ForecastPresenterDelegate: AnyObject {
     func presentForecast(forecast: WeatherModel)
+    func presentError(text: String)
 }
 
 class ForecastPresenter: ForecastServiceDelegate {
@@ -33,7 +33,7 @@ class ForecastPresenter: ForecastServiceDelegate {
     }
     
     func didFail(with error: Error) {
-        print(error.localizedDescription)
+        delegate?.presentError(text: error.localizedDescription)
     }
     
 }

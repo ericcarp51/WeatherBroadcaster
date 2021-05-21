@@ -58,13 +58,22 @@ class ForecastTableViewController: UITableViewController, ForecastPresenterDeleg
         return weekDayString
     }
     
-    // MARK: - ForecastPresenterDelegate methods
+    // MARK: - ForecastPresenterDelegate required methods
     
     func presentForecast(forecast: WeatherModel) {
         self.forecast = forecast
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
             self?.title = forecast.city.capitalized
+        }
+    }
+    
+    func presentError(text: String) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Error", message: text, preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default) { (alert) in }
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
         }
     }
 

@@ -48,6 +48,15 @@ class CurrentWeatherConditionsViewController: UIViewController, ForecastPresente
         updateUI()
     }
     
+    func presentError(text: String) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Error", message: text, preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default) { (alert) in }
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     // MARK: - Actions
     
     // Used to share the received weather information as a string
