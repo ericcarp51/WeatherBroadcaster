@@ -1,5 +1,5 @@
 //
-//  ForecastDetailsWithDate.swift
+//  ForecastByDate.swift
 //  WeatherBroadcaster
 //
 //  Created by Eric Carp on 5/19/21.

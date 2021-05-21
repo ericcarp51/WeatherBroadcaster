@@ -10,4 +10,5 @@ struct Constants {
     static let baseURL = "https://api.openweathermap.org/data/2.5/forecast?appid=7d777f010144ab86975255e987edd841&units=metric"
     static let ForecastTableViewCellIdentifier = "forecastTableViewCell"
     static let dateFormat = "yyyy-MM-dd HH:mm:ss"
+    static let timeFormate = "HH:mm"
 }

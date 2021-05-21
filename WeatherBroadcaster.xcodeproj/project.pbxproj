@@ -23,7 +23,7 @@
 		1BD2352B264E81B50036EE63 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BD23529264E81B50036EE63 /* Main.storyboard */; };
 		1BD2352D264E81B60036EE63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BD2352C264E81B60036EE63 /* Assets.xcassets */; };
 		1BD23530264E81B60036EE63 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BD2352E264E81B60036EE63 /* LaunchScreen.storyboard */; };
-		1BD742C5265526D500B4E02A /* ForecastDetailsWithDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD742C4265526D500B4E02A /* ForecastDetailsWithDate.swift */; };
+		1BD742C5265526D500B4E02A /* ForecastByDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD742C4265526D500B4E02A /* ForecastByDate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +45,7 @@
 		1BD2352C264E81B60036EE63 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BD2352F264E81B60036EE63 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1BD23531264E81B60036EE63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1BD742C4265526D500B4E02A /* ForecastDetailsWithDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastDetailsWithDate.swift; sourceTree = "<group>"; };
+		1BD742C4265526D500B4E02A /* ForecastByDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastByDate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +64,7 @@
 			children = (
 				1B9828D0264E9905008CD85D /* WeatherDataModel.swift */,
 				1B9828D3264E9C2D008CD85D /* WeatherModel.swift */,
-				1BD742C4265526D500B4E02A /* ForecastDetailsWithDate.swift */,
+				1BD742C4265526D500B4E02A /* ForecastByDate.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -214,7 +214,7 @@
 				1BD23528264E81B50036EE63 /* CurrentWeatherConditionsViewController.swift in Sources */,
 				1B9828DA264EB850008CD85D /* ForecastPresenter.swift in Sources */,
 				1B9828D7264EB6FA008CD85D /* ForecastTableViewController.swift in Sources */,
-				1BD742C5265526D500B4E02A /* ForecastDetailsWithDate.swift in Sources */,
+				1BD742C5265526D500B4E02A /* ForecastByDate.swift in Sources */,
 				1B9828D1264E9905008CD85D /* WeatherDataModel.swift in Sources */,
 				1BD23524264E81B50036EE63 /* AppDelegate.swift in Sources */,
 				1BD23526264E81B50036EE63 /* SceneDelegate.swift in Sources */,

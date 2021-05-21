@@ -27,12 +27,24 @@ struct TableViewDataSourceManager {
     }
 }
 
-// MARK: - Used to transform String type of particular format into Date type
+// MARK: - Extensions
+
+// Used to transform String type of particular format into Date type
 
 extension String {
     func transformToDate() -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Constants.dateFormat
         return dateFormatter.date(from: self) ?? Date()
+    }
+}
+
+// Used to transform Date type into String time representation
+
+extension Date {
+    func getTimeOnly() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = Constants.timeFormate
+        return dateFormatter.string(from: self)
     }
 }

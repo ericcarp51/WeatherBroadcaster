@@ -81,7 +81,9 @@ struct WeatherModel: Codable {
     
 }
 
-// MARK: - Used to interpret Int as UIImage system name
+// MARK: - Extensions
+
+// Used to interpret Int as UIImage system name
 
 extension Int {
     func symbolName() -> String {

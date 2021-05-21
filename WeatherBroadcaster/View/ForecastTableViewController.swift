@@ -43,7 +43,7 @@ class ForecastTableViewController: UITableViewController, ForecastPresenterDeleg
         if let forecast = forecast {
             let item = tableViewSourceManager.getArrayOfDays(forecast: forecast)[indexPath.section].forecasts[indexPath.row]
             cell.conditionsSymbolImageView.image = UIImage(systemName: item.symbol.symbolName())
-            cell.forecastTimeLabel.text = "\(item.time)"
+            cell.forecastTimeLabel.text = "\(item.time.getTimeOnly())"
             cell.conditionsLabel.text = item.conditions.capitalized
             cell.temperatureLabel.text = "\(item.temperature)º"
         }
