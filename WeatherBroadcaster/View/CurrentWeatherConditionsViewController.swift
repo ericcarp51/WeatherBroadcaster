@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Network
 
 class CurrentWeatherConditionsViewController: UIViewController, ForecastPresenterDelegate {
     
@@ -22,15 +23,22 @@ class CurrentWeatherConditionsViewController: UIViewController, ForecastPresente
     
     // MARK: - Properties
     
-    let forecastPresenter = ForecastPresenter()
+    var forecastPresenter = ForecastPresenter()
     var forecast: WeatherModel?
+    var networkCheck = NetworkCheck.sharedInstance()
     
     // MARK: - Lifecycle points
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Set the forecast presenter's delegate as CurrentWeatherConditionsViewController
-        forecastPresenter.delegate = self
+        title = "Today"
+        if networkCheck.currentStatus == .satisfied {
+            forecastPresenter = ForecastPresenter()
+            //Set the forecast presenter's delegate as CurrentWeatherConditionsViewController
+            forecastPresenter.delegate = self
+        } else {
+            presentAlert()
+        }
     }
     
     // MARK: Forecast presenter delegate methods
@@ -53,7 +61,6 @@ class CurrentWeatherConditionsViewController: UIViewController, ForecastPresente
     func updateUI() {
         guard let forecast = forecast else { return }
         DispatchQueue.main.async { [weak self] in
-            self?.title = "Today"
             self?.currentConditionsSymbolImageView.image = UIImage(systemName: forecast.currentConditionsSymbol)
             self?.cityAndCountryLabel.text = "\(forecast.city), \(forecast.country)"
             self?.temperatureAndConditionsLabel.text = "\(forecast.currentTemperature)℃ | \(forecast.currentConditions.capitalized)"
@@ -63,6 +70,13 @@ class CurrentWeatherConditionsViewController: UIViewController, ForecastPresente
             self?.currentWindSpeedLabel.text = "\(forecast.currentWindSpeed) km/h"
             self?.currentWindDirectionLabel.text = forecast.currentWindDirection
         }
+    }
+    
+    func presentAlert() {
+        let alert = UIAlertController(title: "No Internet Connection", message: "This App Requires Internet Connection", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { (alert) in }
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
     }
     
 }

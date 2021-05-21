@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Network
 
 protocol ForecastPresenterDelegate: AnyObject {
     func presentForecast(forecast: WeatherModel)

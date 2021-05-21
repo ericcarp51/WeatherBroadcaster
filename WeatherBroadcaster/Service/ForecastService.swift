@@ -5,27 +5,32 @@
 //  Created by Eric Carp on 5/17/21.
 //
 
-import Foundation
+import UIKit
 import CoreLocation
+import Network
 
 protocol ForecastServiceDelegate {
     func getForecastData(data: WeatherModel)
     func didFail(with error: Error)
 }
 
-class ForecastService: NSObject, CLLocationManagerDelegate {
+class ForecastService: NSObject, CLLocationManagerDelegate, NetworkCheckObserver {
     
     let locationManager = CLLocationManager()
     var delegate: ForecastServiceDelegate?
+    var networkCheck = NetworkCheck.sharedInstance()
     var latitude: Double?
     var longitude: Double?
     
     override init() {
         super.init()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
+        if networkCheck.currentStatus == .satisfied {
+            locationManager.delegate = self
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
+        }
+        networkCheck.addObserver(observer: self)
     }
     
     func sendRequest() {
@@ -61,4 +66,13 @@ class ForecastService: NSObject, CLLocationManagerDelegate {
         sendRequest()
     }
     
+    // MARK: NetworkCheckObserver methods
+    
+    func statusDidChange(status: NWPath.Status) {
+        if status == .satisfied {
+            //Do something
+        } else if status == .unsatisfied {
+            //Show no network alert
+        }
+    }
 }
