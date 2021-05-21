@@ -66,9 +66,6 @@
                                                 <rect key="frame" x="39" y="173.66666666666663" width="20" height="22"/>
                                                 <color key="tintColor" systemColor="systemGreenColor"/>
                                                 <state key="normal" image="location.fill" catalog="system"/>
-                                                <connections>
-                                                    <action selector="go:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yVP-7m-Nxl"/>
-                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -230,6 +227,9 @@
                                                 <state key="normal" title="Share">
                                                     <color key="titleColor" systemColor="systemPinkColor"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="shareButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mtf-dD-5sd"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

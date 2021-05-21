@@ -40,8 +40,12 @@ class CurrentWeatherConditionsViewController: UIViewController, ForecastPresente
         updateUI()
     }
     
-    @IBAction func go(_ sender: UIButton) {
-        forecastPresenter.forecastService.sendRequest()
+    @IBAction func shareButtonTapped(_ sender: UIButton) {
+        guard let forecast = forecast else { return }
+        let textToShare = "Check this out! I'm in \(forecast.city)! And it's \(forecast.currentTemperature)℃ here!"
+        let activityController = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
+        activityController.popoverPresentationController?.sourceView = sender
+        present(activityController, animated: true, completion: nil)
     }
     
     // MARK: - Methods
